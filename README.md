@@ -29,6 +29,24 @@ Defaults to schema `olist_resume_analytics`, created by the companion SQL projec
 
 Cleaning rules: parse invalid dates as missing, exclude rows missing keys/date/category, remove duplicate `(order_id, item_number)` lines, fill missing discount with zero (the schema default), exclude negative quantities/prices/discounts and discounts exceeding gross value, and recalculate line revenue. Large values are not dropped automatically: a high-value sale may be real, so investigate it rather than silently deleting it.
 
+## Verified sample insights
+
+I checked the paired schema in MySQL Workbench 8.0 CE. Its seven base tables contain 8,272 rows in total: 12 categories, 1,000 customers, 1,200 orders, 3,600 order items, 1,200 payments, 60 products, and 1,200 shipments. The database also exposes two analytics views.
+
+Workbench query results show that **computers** led delivered merchandise revenue among the returned categories (86,865.60 source amount units), followed by **electronics** (81,915.60) and **books** (76,026.80). The monthly sales view covers January–December 2024; January was highest at 26,522.12 and April lowest at 21,308.32. Delivered order counts ranged from 32 to 37 per month. These are findings from the paired synthetic portfolio database, not claims about Olist's original public data.
+
+### Live dashboard snapshot
+
+These screenshots were captured from the running Streamlit app connected to the local `olist_resume_analytics` schema. With the default date and category filters, the dashboard showed **$896,630 merchandise revenue**, **1,200 orders**, **1,000 customers**, **$747.19 average order value**, **20.0% repeat customers**, and **3,600 valid order lines**. Electronics and computers led the category chart. These are results from the synthetic portfolio database, not Olist's original public dataset. The customer chart uses ranked labels instead of exposing customer IDs.
+
+![Live dashboard overview with filters, KPIs, monthly revenue, and top customers](screenshots/dashboard_overview.jpg)
+
+![Top products and revenue by category](screenshots/dashboard_products_categories.jpg)
+
+![Order value distribution and revenue by customer state](screenshots/dashboard_orders_regions.jpg)
+
+![One-time and repeat customers with RFM customer segments](screenshots/dashboard_rfm_segments.jpg)
+
 ## Dashboard questions
 
 1. How does delivered revenue move month to month?
@@ -38,7 +56,7 @@ Cleaning rules: parse invalid dates as missing, exclude rows missing keys/date/c
 5. How many customers return for more than one order?
 6. Which customer groups are recent, frequent, and high spending?
 
-Charts are generated from live database output. The repository contains no invented result screenshots; add genuine dashboard captures to `screenshots/` after configuring and running it.
+Charts in the dashboard are generated from live database output. The screenshots above show sample output from this project database and filter selection.
 
 ## Setup and run
 

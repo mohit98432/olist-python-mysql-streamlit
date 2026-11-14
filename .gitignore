@@ -2,6 +2,9 @@
 .venv/
 __pycache__/
 .pytest_cache/
+.tmp_edge_profile/
+.tmp_chrome_profile/
+*.log
 *.py[cod]
 .streamlit/secrets.toml
 data/*.csv
