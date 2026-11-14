@@ -31,7 +31,7 @@ def build_rfm(frame: pd.DataFrame, as_of: pd.Timestamp | None = None, clusters: 
     cols = ["customer_unique_id", "recency_days", "frequency_orders", "monetary_revenue", "segment"]
     if frame.empty:
         return pd.DataFrame(columns=cols)
-    ref = pd.Timestamp(as_of) if as_of is not None else pd.Timestamp(frame["order_date"].max()) + pd.Timedelta(days=1, unit="D")
+    ref = pd.Timestamp(as_of) if as_of is not None else pd.Timestamp(frame["order_date"].max()) + pd.DateOffset(days=1)
     rfm = frame.groupby("customer_unique_id").agg(
         last_purchase=("order_date", "max"),
         frequency_orders=("order_id", "nunique"),
